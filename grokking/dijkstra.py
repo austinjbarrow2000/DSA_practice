@@ -31,7 +31,7 @@ def dijkstra(graph, start, finish):
         node = find_lowest_cost_node(costs, processed)
         print(node)
 
-    return processed
+    return parents
 
 
 def find_lowest_cost_node(costs, processed):
@@ -67,4 +67,16 @@ graph["d"]["finish"] = 1
 neighbors = graph["b"]
 print(neighbors.keys())
 
-print(dijkstra(graph, "start", "finish"))
+start = "start"
+finish = "finish"
+parents = dijkstra(graph, start, finish)
+print(parents)
+
+path = []
+path.append(finish)
+path.append(parents[finish])
+# while start not in path:
+#     path.append(parents[path[0]])
+#     print(path)
+
+print(path)
