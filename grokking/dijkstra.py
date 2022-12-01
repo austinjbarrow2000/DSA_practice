@@ -12,26 +12,24 @@ def dijkstra(graph, start, finish):
                 costs[node] = float("inf")
                 parents[node] = None
 
-    print(costs)
-    print(parents)
-
-    node = find_lowest_cost_node(costs, processed)
-    print(node)
     while finish not in processed:  # node is not None:
+        node = find_lowest_cost_node(costs, processed)
         cost = costs[node]
         neighbors = graph[node]
-        for n in neighbors.keys():
-            new_cost = cost + neighbors[n]
-            if costs[n] > new_cost:
-                costs[n] = new_cost
-                parents[n] = n
+        for neighbor in neighbors.keys():
+            new_cost = cost + neighbors[neighbor]
+            if costs[neighbor] > new_cost:
+                costs[neighbor] = new_cost
+                parents[neighbor] = node
         processed.append(node)
-        print(processed)
 
-        node = find_lowest_cost_node(costs, processed)
-        print(node)
+    path = []
+    path.append(finish)
+    while start not in path:
+        path.append(parents[path[-1]])
 
-    return parents
+    path.reverse()
+    return path
 
 
 def find_lowest_cost_node(costs, processed):
@@ -64,19 +62,8 @@ graph["c"]["finish"] = 3
 graph["c"]["d"] = 6
 
 graph["d"]["finish"] = 1
-neighbors = graph["b"]
-print(neighbors.keys())
 
 start = "start"
 finish = "finish"
-parents = dijkstra(graph, start, finish)
-print(parents)
-
-path = []
-path.append(finish)
-path.append(parents[finish])
-# while start not in path:
-#     path.append(parents[path[0]])
-#     print(path)
-
+path = dijkstra(graph, start, finish)
 print(path)
